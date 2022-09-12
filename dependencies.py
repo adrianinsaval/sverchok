@@ -124,9 +124,15 @@ try:
     freecad_d.message = "FreeCAD package is available"
     freecad_d.module = FreeCAD
 except ImportError:
-    freecad_d.message = "sv: FreeCAD package is not available, Solids nodes will not be available"
-    info(freecad_d.message)
-    FreeCAD = None
+    try:
+        import freecad
+        import FreeCAD
+        freecad_d.message = "FreeCAD package is available"
+        freecad_d.module = FreeCAD
+    except ImportError:
+        freecad_d.message = "sv: FreeCAD package is not available, Solids nodes will not be available"
+        info(freecad_d.message)
+        FreeCAD = None
 
 cython_d = sv_dependencies["cython"] = SvDependency("Cython", "https://cython.org/")
 cython_d.pip_installable = True
